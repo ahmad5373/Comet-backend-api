@@ -13,7 +13,6 @@ app.use(express.json()); // express json use as a middleware
 
 // testing app routes  
 app.get("/" , (req, res)=>{
-    console.log("api is working fine");
     res.send("api is working fine");
 })
 
