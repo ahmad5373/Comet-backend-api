@@ -1,4 +1,4 @@
-const user = require("../model/user");
+const User = require("../model/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
@@ -10,7 +10,7 @@ exports.signup = async (req, res, next) => {
   try {
     const { firstName, lastName, company, email, password } = req.body;
 
-    const existingUser = await user.findOne({
+    const existingUser = await User.findOne({
       where: { email: email, deletedAt: null },
     });
 
@@ -23,7 +23,7 @@ exports.signup = async (req, res, next) => {
 
     const encryptpassword = await bcrypt.hash(password, 10);
 
-    const newUser = await user.create({
+    const newUser = await User.create({
       firstName: firstName,
       lastName: lastName,
       company,
@@ -48,7 +48,7 @@ exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const userData = await user.findOne({
+    const userData = await User.findOne({
       where: { email: email, deletedAt: null },
     });
 
@@ -88,7 +88,7 @@ exports.login = async (req, res, next) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const Users = await user.findAll({ where: { deletedAt: null } })
+    const Users = await User.findAll({ where: { deletedAt: null } })
     console.log("users", Users);
     res.status(200).json(Users)
   } catch (error) {
@@ -102,7 +102,7 @@ exports.forgotPassword = async (req, res) => {
   try {
     console.log("req.body.email", req.body.email);
 
-    const userData = await user.findOne({ where: { email: req.body.email } })
+    const userData = await User.findOne({ where: { email: req.body.email } })
 
     if (!userData) {
       return res.status(404).json({ error: "User Not Found" })
@@ -137,7 +137,7 @@ exports.resetPassword = async (req, res) => {
   try {
     const { token, newPassword, confirmPassword } = req.body;
 
-    const userData = await user.findOne({
+    const userData = await User.findOne({
       where: {
         resetPasswordToken: token,
       },

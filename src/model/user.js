@@ -1,7 +1,7 @@
 const sequelize = require("sequelize");
 const database = require("../database/connection");
 
-const user = database.define('user', {
+const User = database.define('User', {
   id: {
     type: sequelize.BIGINT(),
     primaryKey: true,
@@ -41,7 +41,7 @@ const user = database.define('user', {
   // if you don't want that, set the following
   freezeTableName: true,
   // define the table's name
-  tableName: "user",
+  tableName: "User",
 });
 
-module.exports = user;
+module.exports = User;

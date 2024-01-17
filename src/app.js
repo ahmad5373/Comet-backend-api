@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const user = require("./routes/user");
+const User = require("./routes/user");
 
 
 app.use(cors());
@@ -17,6 +17,6 @@ app.get("/" , (req, res)=>{
 })
 
 
-app.use("/users", user)
+app.use("/users", User)
 
 module.exports = app;
