@@ -15,10 +15,7 @@ exports.signup = async (req, res, next) => {
     });
 
     if (existingUser) {
-      return res.status(401).json({
-        success: false,
-        message: "This Email is Already Exist.",
-      });
+      return res.status(401).json({ message: "This Email is Already Exist."});
     }
 
     const encryptpassword = await bcrypt.hash(password, 10);
@@ -77,11 +74,7 @@ exports.login = async (req, res, next) => {
 
   } catch (err) {
     console.error("Error during login", err);
-    res.status(500).json({
-      success: false,
-      message: "Error during login",
-      error: err.message,
-    });
+    res.status(500).json({ message: "Error during login",error: err.message, });
   }
 };
 
