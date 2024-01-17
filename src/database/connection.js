@@ -1,15 +1,16 @@
 // database/connection.js
 const { Sequelize } = require("sequelize");
 require('dotenv').config(); // load environment variable from env file 
+const pg = require('pg'); // require 'pg' module explicitly
 
-
-const connection = new Sequelize(process.env.DB_NAME , process.env.DB_USER  , process.env.DB_PASSWORD,{
+const connection = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
   dialect: 'postgres', 
   logging: false, // Disable logging to reduce noise
   dialectOptions: {
     ssl: process.env.NODE_ENV === 'production', // Enable SSL only in production
   },
+  dialectModule: pg, // Use the explicitly required 'pg' module
 });
 
 // Test the connection
