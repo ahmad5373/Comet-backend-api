@@ -15,7 +15,7 @@ exports.signup = async (req, res, next) => {
     });
 
     if (existingUser) {
-      return res.status(401).json({ message: "This Email is Already Exist."});
+      return res.status(401).json({ error: "This Email is Already Exist."});
     }
 
     const encryptpassword = await bcrypt.hash(password, 10);
@@ -32,11 +32,7 @@ exports.signup = async (req, res, next) => {
 
   } catch (err) {
     console.error("Error creating user", err);
-    res.status(500).json({
-      success: false,
-      message: "Error creating user",
-      error: err.message,
-    });
+    res.status(500).json({ error: "Error creating user",error: err.message, });
   }
 };
 
@@ -74,7 +70,7 @@ exports.login = async (req, res, next) => {
 
   } catch (err) {
     console.error("Error during login", err);
-    res.status(500).json({ message: "Error during login",error: err.message, });
+    res.status(500).json({ error: "Error during login",error: err.message, });
   }
 };
 
@@ -122,9 +118,6 @@ exports.forgotPassword = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
-
-const { Op } = require("sequelize");
-
 
 exports.resetPassword = async (req, res) => {
   try {
